@@ -5,6 +5,7 @@ import com.example.entity.User;
 import com.example.service.UserService;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.DigestUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,5 +34,21 @@ public class UserController {
                 return Result.error("用戶名已被占用");
             }
 
+    }
+    @PostMapping("/login")
+    public Result login(@Pattern(regexp = "^\\S{5,16}$") String username,@Pattern(regexp = "^\\S{5,16}$") String password){
+        //根據用戶名查詢User
+        User user = userService.findByUserName(username);
+        //判斷是否查詢到
+        if(user == null){
+            return Result.error("用戶名不正確");
+        }
+        String loginPassword= DigestUtils.md5DigestAsHex(password.getBytes());
+
+        if(loginPassword.equals(user.getPassword())){
+            return Result.success("登入成功");
+        }
+
+        return Result.error("密碼錯誤");
     }
 }
