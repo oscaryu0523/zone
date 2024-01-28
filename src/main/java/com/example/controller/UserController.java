@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.entity.Result;
 import com.example.entity.User;
 import com.example.service.UserService;
+import com.example.utils.JwtUtil;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
@@ -10,6 +11,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -46,7 +50,11 @@ public class UserController {
         String loginPassword= DigestUtils.md5DigestAsHex(password.getBytes());
 
         if(loginPassword.equals(user.getPassword())){
-            return Result.success("登入成功");
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", user.getId());
+            map.put("username",user.getUsername());
+            String token = JwtUtil.genToken(map);
+            return Result.success(token);
         }
 
         return Result.error("密碼錯誤");
