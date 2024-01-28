@@ -2,6 +2,7 @@ package com.example.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 public class User {
     private Integer id; // 主鍵ID
     private String username; // 用戶名
+    @JsonIgnore
     private String password; // 密碼
     private String nickname; // 昵稱
     private String email; // 郵箱
