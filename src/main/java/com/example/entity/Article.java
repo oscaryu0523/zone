@@ -1,6 +1,7 @@
 package com.example.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,8 @@ public class Article {
     private String state; // 發布狀態 已發布|草稿
     private Integer categoryId; // 文章分類id
     private Integer createUser; // 創建人ID
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime; // 創建時間
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime; // 更新時間
 }

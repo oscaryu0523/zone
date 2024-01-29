@@ -2,6 +2,7 @@ package com.example.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -27,7 +28,9 @@ public class User {
     @NotEmpty
     private String email; // 郵箱
     private String userPic; // 用戶頭像地址
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime; // 創建時間
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime; // 更新時間
 }
 
