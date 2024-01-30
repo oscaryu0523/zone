@@ -4,11 +4,17 @@ spring:
     url: jdbc:mysql://localhost:3306/zone?serverTimezone=Asia/Taipei&characterEncoding=utf-8
     username: root
     password: "0523"
-
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 5
 
 #開啟 java 駝峰式命名 跟 資料庫 下滑線命名的自動轉換
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+
+
 
 

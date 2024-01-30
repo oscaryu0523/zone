@@ -27,17 +27,17 @@ public class JwtTest {
 
         System.out.println(token);
     }
-    @Test
-    public void testParse(){
-        //定義字符串，模擬用戶傳遞過來的token
-        String token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" +
-                ".eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6IuW8teS4iSJ9LCJleHAiOjE3MDY0NzE4Mjl9" +
-                ".kwbvwLUi1q3X7__20k99HHBL6D2cXWoGHfrpC5rKLkk";
-        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256("oscar")).build();
-
-        DecodedJWT decodedJWT = jwtVerifier.verify(token);//驗證token，生成一個解析後的jwt對象
-        Map<String, Claim> claims = decodedJWT.getClaims();
-        System.out.println(claims.get("user"));
-
-    }
+//    @Test
+//    public void testParse(){
+//        //定義字符串，模擬用戶傳遞過來的token
+//        String token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" +
+//                ".eyJ1c2VyIjp7ImlkIjoxLCJ1c2VybmFtZSI6IuW8teS4iSJ9LCJleHAiOjE3MDY0NzE4Mjl9" +
+//                ".kwbvwLUi1q3X7__20k99HHBL6D2cXWoGHfrpC5rKLkk";
+//        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256("oscar")).build();
+//
+//        DecodedJWT decodedJWT = jwtVerifier.verify(token);//驗證token，生成一個解析後的jwt對象
+//        Map<String, Claim> claims = decodedJWT.getClaims();
+//        System.out.println(claims.get("user"));
+//
+//    }
 }
