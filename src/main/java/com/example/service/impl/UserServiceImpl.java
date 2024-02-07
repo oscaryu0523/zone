@@ -23,6 +23,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(String username, String password) {
+        System.out.println(username);
+        System.out.println(password);
         if(password == null){
             throw new IllegalArgumentException("密碼不能為空");
         }
@@ -53,4 +55,6 @@ public class UserServiceImpl implements UserService {
         Integer id = (Integer)map.get("id");
         userMapper.updatePwd(DigestUtils.md5DigestAsHex(newPwd.getBytes()),id);
     }
+
+
 }

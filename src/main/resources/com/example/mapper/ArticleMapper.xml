@@ -15,8 +15,16 @@
                 and state = #{state}
             </if>
 
-            and create_user = #{userId}
+            <if test="userId != null">
+                and create_user = #{userId}
+            </if>
+
+            <!-- 新增關鍵字搜尋條件 -->
+            <if test="keyword != null">
+                and (title like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%'))
+            </if>
         </where>
+        order by create_time desc
     </select>
 
 </mapper>
