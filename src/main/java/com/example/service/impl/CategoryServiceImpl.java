@@ -1,6 +1,8 @@
 package com.example.service.impl;
 
+import com.example.entity.Article;
 import com.example.entity.Category;
+import com.example.mapper.ArticleMapper;
 import com.example.mapper.CategoryMapper;
 import com.example.service.CategoryService;
 import com.example.utils.ThreadLocalUtil;
@@ -15,6 +17,8 @@ import java.util.Map;
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
+    @Autowired
+    private ArticleMapper articleMapper;
     @Override
     public void add(Category category) {
         Map<String, Object> map = ThreadLocalUtil.get();
@@ -24,6 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<Category> list = categoryMapper.list(null);
         boolean exists=list.stream()
                         .anyMatch(c -> c.getCategoryName().equals(category.getCategoryName()));
+//        不存在才可以新增
         if(!exists) {
             categoryMapper.add(category);
         }else{
@@ -54,6 +59,16 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void delete(Integer id) {
-        categoryMapper.delete(id);
+//        檢查該分類是否有文章
+        List<Article> list = articleMapper.list(null, id, null, null);
+        Category category = categoryMapper.findById(id);
+        boolean exists=list.stream()
+                        .anyMatch(c -> c.getCategoryId()==id);
+//        不存在才可以刪除
+        if(!exists) {
+            categoryMapper.delete(id);
+        }else{
+            throw new RuntimeException(category.getCategoryName()+"的文章已經存在，無法刪除");
+        }
     }
 }
