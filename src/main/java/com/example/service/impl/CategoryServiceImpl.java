@@ -20,7 +20,15 @@ public class CategoryServiceImpl implements CategoryService {
         Map<String, Object> map = ThreadLocalUtil.get();
         Integer id = (Integer)map.get("id");
         category.setCreateUser(id);
-        categoryMapper.add(category);
+//        檢查該分類是否已經存在
+        List<Category> list = categoryMapper.list(null);
+        boolean exists=list.stream()
+                        .anyMatch(c -> c.getCategoryName().equals(category.getCategoryName()));
+        if(!exists) {
+            categoryMapper.add(category);
+        }else{
+            throw new RuntimeException("該分類已經存在");
+        }
     }
 
 
