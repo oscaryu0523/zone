@@ -1,9 +1,9 @@
 package com.example.controller;
 
 import com.example.entity.Article;
-import com.example.entity.ArticleInfoResponse;
-import com.example.entity.PageBean;
-import com.example.entity.Result;
+import com.example.dto.ArticleInfoResponse;
+import com.example.dto.PageBean;
+import com.example.dto.Result;
 import com.example.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

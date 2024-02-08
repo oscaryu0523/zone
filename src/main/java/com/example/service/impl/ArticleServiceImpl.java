@@ -1,10 +1,12 @@
 package com.example.service.impl;
 
+import com.example.dto.CommentResponse;
 import com.example.entity.Article;
-import com.example.entity.ArticleInfoResponse;
-import com.example.entity.PageBean;
+import com.example.dto.ArticleInfoResponse;
+import com.example.dto.PageBean;
 import com.example.entity.User;
 import com.example.mapper.ArticleMapper;
+import com.example.mapper.CommentMapper;
 import com.example.mapper.UserMapper;
 import com.example.service.ArticleService;
 import com.example.utils.ThreadLocalUtil;
@@ -22,6 +24,8 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleMapper articleMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private CommentMapper commentMapper;
     //新增文章
     @Override
     public void add(Article article) {
@@ -74,12 +78,20 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleInfoResponse articleInfo(Integer articleId) {
         ArticleInfoResponse articleInfoResponse = new ArticleInfoResponse();
+//        根據文章id取得該篇文章資訊
         Article article=articleMapper.articleInfo(articleId);
+//        根據創建者id取得用戶資訊
         User user = userMapper.findById(article.getCreateUser());
 
+        List<CommentResponse> list = commentMapper.findById(articleId);
+
+//        存入dto中
         articleInfoResponse.setArticle(article);
         articleInfoResponse.setUsername(user.getUsername());
         articleInfoResponse.setNickname(user.getNickname());
+        articleInfoResponse.setCommentResponseList(list);
+
+
         return articleInfoResponse;
     }
 

@@ -1,8 +1,7 @@
 package com.example.controller;
 
-import com.example.entity.Result;
+import com.example.dto.Result;
 import com.example.entity.User;
-import com.example.entity.ArticleInfoResponse;
 import com.example.service.UserService;
 import com.example.utils.JwtUtil;
 import com.example.utils.ThreadLocalUtil;

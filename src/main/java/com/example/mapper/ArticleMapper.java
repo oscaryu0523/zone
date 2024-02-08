@@ -1,7 +1,6 @@
 package com.example.mapper;
 
 import com.example.entity.Article;
-import com.example.entity.PageBean;
 import org.apache.ibatis.annotations.*;
 
 

@@ -1,8 +1,8 @@
 package com.example.service;
 
 import com.example.entity.Article;
-import com.example.entity.ArticleInfoResponse;
-import com.example.entity.PageBean;
+import com.example.dto.ArticleInfoResponse;
+import com.example.dto.PageBean;
 
 public interface ArticleService {
     //新增文章

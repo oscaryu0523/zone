@@ -1,6 +1,5 @@
 package com.example.interceptor;
 
-import com.example.entity.Result;
 import com.example.utils.JwtUtil;
 import com.example.utils.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;
