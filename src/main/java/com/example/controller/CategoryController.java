@@ -21,7 +21,12 @@ public class CategoryController {
     }
     @GetMapping
     public Result<List<Category>> list(){
-        List<Category> list=categoryService.list();
+        List<Category> list=categoryService.list(true);
+        return Result.success(list);
+    }
+    @GetMapping("/listAll")
+    public Result<List<Category>> listAll(){
+        List<Category> list=categoryService.list(false);
         return Result.success(list);
     }
     @GetMapping("/detail")

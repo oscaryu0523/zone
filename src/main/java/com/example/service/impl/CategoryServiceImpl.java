@@ -23,10 +23,14 @@ public class CategoryServiceImpl implements CategoryService {
         categoryMapper.add(category);
     }
 
+
     @Override
-    public List<Category> list() {
-        Map<String,Object> map = ThreadLocalUtil.get();
-        Integer id = (Integer)map.get("id");
+    public List<Category> list(boolean isUser) {
+        Integer id=null;
+        if(isUser) {
+            Map<String, Object> map = ThreadLocalUtil.get();
+            id = (Integer) map.get("id");
+        }
         return categoryMapper.list(id);
     }
 

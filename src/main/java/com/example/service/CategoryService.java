@@ -8,7 +8,7 @@ public interface CategoryService {
     //新增分類
     void add(Category category);
     //列表查詢
-    List<Category> list();
+    List<Category> list(boolean isUser);
     //根據id查詢分類信息
     Category findById(Integer id);
     //根據id更新分類信息
