@@ -20,5 +20,10 @@ public class CommentServiceImpl implements CommentService {
         commentMapper.add(comment);
     }
 
+    @Override
+    public void update(Integer id, String content) {
+        commentMapper.update(id, content);
+    }
+
 
 }

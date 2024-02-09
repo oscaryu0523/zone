@@ -19,5 +19,13 @@ public class CommentController {
         commentService.add(comment);
         return Result.success();
     }
+    @PutMapping
+    public Result update(
+            @RequestParam Integer id,
+            @RequestParam String content
+    ){
+        commentService.update(id,content);
+        return Result.success();
+    }
 
 }

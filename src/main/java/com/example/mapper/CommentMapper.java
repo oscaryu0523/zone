@@ -5,6 +5,7 @@ import com.example.entity.Comment;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -17,5 +18,6 @@ public interface CommentMapper {
             "comment c left join user u on c.create_id = u.id " +
             "where c.article_id=#{id}")
     List<CommentResponse> findById(Integer id);
-
+    @Update("update comment set content = #{content}, update_time = now() where id = #{id}")
+    void update(Integer id, String content);
 }
