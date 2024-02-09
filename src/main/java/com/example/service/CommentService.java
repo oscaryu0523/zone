@@ -10,4 +10,5 @@ public interface CommentService {
 
     void update(Integer id, String content);
 
+    void delete(Integer id);
 }

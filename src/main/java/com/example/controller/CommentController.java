@@ -27,5 +27,12 @@ public class CommentController {
         commentService.update(id,content);
         return Result.success();
     }
+    @DeleteMapping
+    public Result delete(
+            @RequestParam Integer id
+    ){
+        commentService.delete(id);
+        return Result.success();
+    }
 
 }

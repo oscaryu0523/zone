@@ -25,5 +25,10 @@ public class CommentServiceImpl implements CommentService {
         commentMapper.update(id, content);
     }
 
+    @Override
+    public void delete(Integer id) {
+        commentMapper.delete(id);
+    }
+
 
 }

@@ -2,10 +2,7 @@ package com.example.mapper;
 
 import com.example.dto.CommentResponse;
 import com.example.entity.Comment;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -20,4 +17,7 @@ public interface CommentMapper {
     List<CommentResponse> findById(Integer id);
     @Update("update comment set content = #{content}, update_time = now() where id = #{id}")
     void update(Integer id, String content);
+    @Delete("delete from comment where id = #{id}")
+    void delete(Integer id);
+
 }
