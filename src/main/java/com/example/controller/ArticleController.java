@@ -57,7 +57,7 @@ public class ArticleController {
         articleService.delete(id);
         return Result.success();
     }
-    @GetMapping
+    @GetMapping("/search")
     public Result<ArticleInfoResponse> articleInfo(@RequestParam Integer id){
         ArticleInfoResponse articleInfoResponse = articleService.articleInfo(id);
         return Result.success(articleInfoResponse);

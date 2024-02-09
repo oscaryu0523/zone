@@ -22,16 +22,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(String username, String password) {
-        System.out.println(username);
-        System.out.println(password);
+    public void register(String username, String password, String nickname, String email) {
         if(password == null){
             throw new IllegalArgumentException("密碼不能為空");
         }
         //加密
         String hashPassword = DigestUtils.md5DigestAsHex(password.getBytes());
         //添加
-        userMapper.add(username,hashPassword);
+        userMapper.add(username,hashPassword,nickname, email);
 
 
     }

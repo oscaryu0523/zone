@@ -5,6 +5,7 @@ import com.example.entity.User;
 import com.example.service.UserService;
 import com.example.utils.JwtUtil;
 import com.example.utils.ThreadLocalUtil;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,19 @@ public class UserController {
     private StringRedisTemplate stringRedisTemplate;
 
     @PostMapping("/register")
-    public Result register(@Pattern(regexp = "^\\S{5,16}$") String username,@Pattern(regexp = "^\\S{5,16}$") String password){
+    public Result register(
+            @Pattern(regexp = "^\\S{2,10}$", message = "暱稱必須是2到10位的非空白字符") String nickname
+            ,@Email String email
+            ,@Pattern(regexp = "^\\S{5,16}$", message = "用戶名必須是5到16位的非空白字符") String username
+            ,@Pattern(regexp = "^\\S{5,16}$", message = "密碼必須是5到16位的非空白字符") String password){
 
 
             //查詢用戶
             User user = userService.findByUserName(username);
             if (user == null) {
                 //用戶名不存在即可註冊
-                userService.register(username, password);
+                User user1 = new User();
+                userService.register(username, password,nickname,email);
                 return Result.success();
             } else {
                 //用戶名已存在
@@ -46,7 +52,9 @@ public class UserController {
 
     }
     @PostMapping("/login")
-    public Result login(@Pattern(regexp = "^\\S{5,16}$") String username,@Pattern(regexp = "^\\S{5,16}$") String password){
+    public Result login(
+            @Pattern(regexp = "^\\S{5,16}$", message = "用戶名必須是5到16位的非空白字符") String username
+            ,@Pattern(regexp = "^\\S{5,16}$", message = "密碼必須是5到16位的非空白字符") String password){
         //根據用戶名查詢User
         User user = userService.findByUserName(username);
         //判斷是否查詢到
