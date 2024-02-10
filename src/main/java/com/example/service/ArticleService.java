@@ -14,5 +14,5 @@ public interface ArticleService {
 
     void delete(Integer id);
 
-    ArticleInfoResponse articleInfo(Integer articleId);
+    ArticleInfoResponse articleInfo(Integer articleId, Integer userId);
 }

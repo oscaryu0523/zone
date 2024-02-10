@@ -11,6 +11,9 @@ public class CommentResponse {
     String nickname;
     String userPic;
     String content;
+    Integer goodLike;
+    Integer badLike;
+    Integer likeTypeId;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime updateTime;
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CommentMapper">
+
+    <select id="findById" parameterType="map" resultType="com.example.dto.CommentResponse">
+        SELECT
+        c.id,
+        c.create_id AS createId,
+        u.nickname,
+        u.user_pic AS userPic,
+        c.content,
+        c.update_time AS updateTime,
+        (SELECT COUNT(*) FROM likes WHERE target_id = c.id AND target_type = 'comment' AND like_type_id = 1) AS goodLike,
+        (SELECT COUNT(*) FROM likes WHERE target_id = c.id AND target_type = 'comment' AND like_type_id = 2) AS badLike
+        <if test="userId != null">
+            , (SELECT like_type_id FROM likes WHERE target_id = c.id AND target_type = 'comment' AND create_id = #{userId}) AS likeTypeId
+        </if>
+        FROM
+        comment c
+        LEFT JOIN user u ON c.create_id = u.id
+        WHERE c.article_id = #{articleId}
+    </select>
+
+
+</mapper>

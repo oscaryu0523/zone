@@ -58,8 +58,11 @@ public class ArticleController {
         return Result.success();
     }
     @GetMapping("/search")
-    public Result<ArticleInfoResponse> articleInfo(@RequestParam Integer id){
-        ArticleInfoResponse articleInfoResponse = articleService.articleInfo(id);
+    public Result<ArticleInfoResponse> articleInfo(
+            @RequestParam Integer articleId,
+            @RequestParam(required = false) Integer userId
+    ){
+        ArticleInfoResponse articleInfoResponse = articleService.articleInfo(articleId,userId);
         return Result.success(articleInfoResponse);
     }
 
