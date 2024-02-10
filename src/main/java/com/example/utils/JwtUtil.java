@@ -11,10 +11,12 @@ public class JwtUtil {
     private static final String KEY = "oscar";
 	
 	//接收業務資料,產生token並返回
-    public static String genToken(Map<String, Object> claims) {
+    public static String genToken(Map<String, Object> claims, boolean remember) {
+        long expiryTimeInMillis = remember ? 1000 * 60 * 60 * 24 * 10 : 1000 * 60 * 60 * 6; // 10天或1小時
+        System.out.println(System.currentTimeMillis() + expiryTimeInMillis);
         return JWT.create()
                 .withClaim("claims", claims)
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 12))
+                .withExpiresAt(new Date(System.currentTimeMillis() + expiryTimeInMillis))
                 .sign(Algorithm.HMAC256(KEY));
     }
 

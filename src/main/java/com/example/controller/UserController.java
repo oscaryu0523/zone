@@ -54,7 +54,10 @@ public class UserController {
     @PostMapping("/login")
     public Result login(
             @Pattern(regexp = "^\\S{5,16}$", message = "用戶名必須是5到16位的非空白字符") String username
-            ,@Pattern(regexp = "^\\S{5,16}$", message = "密碼必須是5到16位的非空白字符") String password){
+            ,@Pattern(regexp = "^\\S{5,16}$", message = "密碼必須是5到16位的非空白字符") String password
+            ,boolean remember
+    ){
+        System.out.println("remember="+remember);
         //根據用戶名查詢User
         User user = userService.findByUserName(username);
         //判斷是否查詢到
@@ -67,10 +70,11 @@ public class UserController {
             Map<String, Object> map = new HashMap<>();
             map.put("id", user.getId());
             map.put("username",user.getUsername());
-            String token = JwtUtil.genToken(map);
+            String token = JwtUtil.genToken(map,remember);
             //把token存儲到redis中，令牌1小時候失效
             ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
-            operations.set(token,token,1, TimeUnit.HOURS);
+            long duration = remember ? 24 * 10 : 6; // 10天或1小時
+            operations.set(token, token, duration, TimeUnit.HOURS);
 
 
             return Result.success(token);
