@@ -16,7 +16,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //登錄接口 和 註冊接口 不攔截
         registry.addInterceptor(loginInterceptor)
-                .excludePathPatterns("/user/login","/user/register")//登入、註冊不攔截
+                .excludePathPatterns("/user/login","/user/register","/user/checkEmail",
+                        "/user/getEmail","/user/resetPwd")//登入、註冊、忘記密碼、重置密碼不攔截
                 .excludePathPatterns("/article/listAll","/category/listAll")//文章列表頁面不攔截
                 .excludePathPatterns("/article/search");//文章明細頁面不攔截
 

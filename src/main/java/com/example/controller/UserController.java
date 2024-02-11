@@ -4,6 +4,8 @@ import com.example.dto.Result;
 import com.example.entity.User;
 import com.example.service.UserService;
 import com.example.utils.JwtUtil;
+import com.example.utils.Mail;
+import com.example.utils.ResetPasswordTokenUtil;
 import com.example.utils.ThreadLocalUtil;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
@@ -16,6 +18,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +35,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private ResetPasswordTokenUtil resetPasswordTokenUtil;
 
     @PostMapping("/register")
     public Result register(
@@ -129,11 +137,66 @@ public class UserController {
         }
 
         //調用service完成更新
-        userService.updatePwd(newPwd);
+        userService.updatePwd(newPwd,null);
 
         //刪除redis中對應的token
         ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
         operations.getOperations().delete(token);
+
+        return Result.success();
+    }
+//    忘記密碼接口
+    @GetMapping("/checkEmail")
+    public Result checkEmail(@RequestParam @Email String email) throws MessagingException {
+        User user=userService.checkEmail(email);
+        return Result.success();
+    }
+
+//    取得token對應的email接口
+    @GetMapping("/getEmail")
+    public Result getEmail(@RequestParam String token){
+        String email = resetPasswordTokenUtil.getUserEmailByToken(token);
+        return Result.success(email);
+    }
+
+    @PatchMapping("/resetPwd")
+    public Result resetPwd(@RequestBody Map<String, String> params){
+        System.out.println("進入重置密碼");
+//        校驗參數
+        String token = params.get("token");
+        String email = params.get("email");
+        String newPwd = params.get("new_pwd");
+        String rePwd =  params.get("re_pwd");
+
+        if(!StringUtils.hasLength(token)||!StringUtils.hasLength(email) ||
+                !StringUtils.hasLength(newPwd) || !StringUtils.hasLength(rePwd)){
+            return Result.error("缺少必要的參數");
+        }
+
+        // 從Redis檢查token是否存在且未過期
+        String storedEmail = resetPasswordTokenUtil.getUserEmailByToken(token);
+        if(storedEmail == null){
+            return Result.error("令牌不存在或已過期。");
+        }
+//      確認token對應的email是否和請求中的email一致
+        if(!email.equals(storedEmail)){
+            return Result.error("令牌無效或與郵箱不匹配。");
+        }
+
+//        根據email取得用戶資訊
+        User user=userService.getUserByEmail(email);
+
+        //確認new_pwd是否跟re_pwd依樣
+
+        if(!newPwd.equals(rePwd)){
+            return Result.error("兩次填寫的新密碼不一樣");
+        }
+
+        //調用service完成更新
+        userService.updatePwd(newPwd, user.getId());
+
+        //刪除redis中對應的token
+        resetPasswordTokenUtil.deleteResetPasswordToken(token);
 
         return Result.success();
     }

@@ -28,4 +28,6 @@ public interface UserMapper {
     void updatePwd(String newPwd,Integer id);
     @Select("select * from user where id = #{id}")
     User findById(Integer id);
+    @Select("select * from user where email = #{email}")
+    User findByEmail(String email);
 }

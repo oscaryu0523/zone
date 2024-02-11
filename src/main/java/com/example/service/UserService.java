@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.entity.User;
 
+import javax.mail.MessagingException;
 import java.util.Map;
 
 public interface UserService {
@@ -14,8 +15,12 @@ public interface UserService {
     //更新頭像
     void updateAvatar(String avatarUrl);
 
-    void updatePwd(String newPwd);
+    void updatePwd(String newPwd,Integer id);
 
+
+    User checkEmail(String email) throws MessagingException;
+
+    User getUserByEmail(String email);
 
 }
 
