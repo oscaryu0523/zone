@@ -14,6 +14,10 @@ mail:
   myGmail: z5314888@gmail.com
   myGmailPassword: evgw uqfs jvby akup
 
+AliOss:
+  ACCESS_KEY_ID: LTAI5t9kSXVMLVffoQYnU1uP
+  ACCESS_KEY_SECRET: 1LTMomjm9UxGRhDXW5bc7yBBi0CxV3
+
 #開啟 java 駝峰式命名 跟 資料庫 下滑線命名的自動轉換
 mybatis:
   configuration:

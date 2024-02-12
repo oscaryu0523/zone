@@ -6,6 +6,8 @@ import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -15,8 +17,10 @@ public class AliOss {
     private static final String ENDPOINT = "oss-ap-northeast-1.aliyuncs.com";
     // 從環境變量中獲取訪問憑證。在運行示例代碼之前，確保已配置OSS_ACCESS_KEY_ID和OSS_ACCESS_KEY_SECRET環境變量。
 //        EnvironmentVariableCredentialsProvider credentialsProvider = CredentialsProviderFactory.newEnvironmentVariableCredentialsProvider();
-    private static final String ACCESS_KEY_ID="LTAI5t9kSXVMLVffoQYnU1uP";
-    private static final String ACCESS_KEY_SECRET="1LTMomjm9UxGRhDXW5bc7yBBi0CxV3";
+    @Value("${ACCESS_KEY_ID}")
+    private static String ACCESS_KEY_ID;
+    @Value("${ACCESS_KEY_SECRET}")
+    private static String ACCESS_KEY_SECRET;
 
     // 指定存儲桶的名稱。
     private static final String BUCKET_NAME = "oscar-zone";
