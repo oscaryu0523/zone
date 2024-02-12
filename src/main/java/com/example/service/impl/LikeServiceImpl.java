@@ -21,7 +21,7 @@ public class LikeServiceImpl implements LikeService {
         Integer id = (Integer)map.get("id");
         like.setCreateId(id);
 //        根據 targetType targetId 查出有沒有紀錄
-        Like existLike = likeMapper.getLike(like.getTargetType(), like.getTargetId());
+        Like existLike = likeMapper.getLike(like.getTargetType(), like.getTargetId(),id);
         //如果按讚紀錄為空 則修改
         if (existLike == null) {
 //            新增一筆紀錄

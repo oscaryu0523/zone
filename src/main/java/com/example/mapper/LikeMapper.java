@@ -6,8 +6,8 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface LikeMapper {
     //    根據類型 跟 編號查出 一筆按讚資料
-    @Select("select  * from likes where target_type = #{targetType} and target_id = #{targetId}")
-    Like getLike(String targetType, Integer targetId);
+    @Select("select  * from likes where target_type = #{targetType} and target_id = #{targetId} and create_id = #{userId}")
+    Like getLike(String targetType, Integer targetId,Integer userId);
 
     //    插入一筆 按讚資料
     @Insert("insert into likes (target_id, target_type, like_type_id, create_id, create_time) " +
